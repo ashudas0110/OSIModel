@@ -1,0 +1,461 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>OSI Model Interactive Diagram</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            margin: 0;
+            padding: 20px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 15px;
+            padding: 30px;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+        }
+        
+        h1 {
+            text-align: center;
+            color: #2c3e50;
+            margin-bottom: 30px;
+            font-size: 2.5em;
+        }
+        
+        .osi-model {
+            display: flex;
+            flex-direction: column;
+            gap: 3px;
+            margin: 20px 0;
+            border: 3px solid #34495e;
+            border-radius: 10px;
+            overflow: hidden;
+        }
+        
+        .layer {
+            display: flex;
+            align-items: center;
+            padding: 15px 20px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            position: relative;
+        }
+        
+        .layer:hover {
+            transform: translateX(10px);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+        }
+        
+        .layer-7 { background: linear-gradient(135deg, #ff6b6b, #ee5a24); color: white; }
+        .layer-6 { background: linear-gradient(135deg, #ffa502, #ff6348); color: white; }
+        .layer-5 { background: linear-gradient(135deg, #3742fa, #2f3542); color: white; }
+        .layer-4 { background: linear-gradient(135deg, #2ed573, #1e90ff); color: white; }
+        .layer-3 { background: linear-gradient(135deg, #ffa726, #ff7043); color: white; }
+        .layer-2 { background: linear-gradient(135deg, #ab47bc, #8e24aa); color: white; }
+        .layer-1 { background: linear-gradient(135deg, #26a69a, #00695c); color: white; }
+        
+        .layer-number {
+            font-size: 2em;
+            font-weight: bold;
+            margin-right: 20px;
+            min-width: 40px;
+        }
+        
+        .layer-info {
+            flex: 1;
+        }
+        
+        .layer-name {
+            font-size: 1.4em;
+            font-weight: bold;
+            margin-bottom: 5px;
+        }
+        
+        .layer-function {
+            font-size: 0.9em;
+            opacity: 0.9;
+        }
+        
+        .layer-details {
+            display: none;
+            margin-top: 20px;
+            padding: 20px;
+            background: #f8f9fa;
+            border-radius: 8px;
+            border-left: 5px solid #007bff;
+        }
+        
+        .layer-details.active {
+            display: block;
+            animation: slideDown 0.3s ease;
+        }
+        
+        @keyframes slideDown {
+            from { opacity: 0; transform: translateY(-10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        .protocols {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            margin-top: 10px;
+        }
+        
+        .protocol {
+            background: #007bff;
+            color: white;
+            padding: 4px 8px;
+            border-radius: 4px;
+            font-size: 0.8em;
+        }
+        
+        .data-flow {
+            margin: 30px 0;
+            text-align: center;
+        }
+        
+        .flow-box {
+            display: inline-block;
+            padding: 10px 20px;
+            margin: 5px;
+            background: #e3f2fd;
+            border: 2px solid #1976d2;
+            border-radius: 8px;
+            font-weight: bold;
+        }
+        
+        .arrow {
+            display: inline-block;
+            font-size: 1.5em;
+            color: #1976d2;
+            margin: 0 10px;
+        }
+        
+        .comparison-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+        }
+        
+        .comparison-table th,
+        .comparison-table td {
+            padding: 12px;
+            text-align: left;
+            border: 1px solid #ddd;
+        }
+        
+        .comparison-table th {
+            background: #f1f3f4;
+            font-weight: bold;
+        }
+        
+        .comparison-table tr:nth-child(even) {
+            background: #f9f9f9;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🌐 OSI Model Interactive Learning</h1>
+        
+        <div class="osi-model">
+            <div class="layer layer-7" onclick="toggleDetails('layer7')">
+                <div class="layer-number">7</div>
+                <div class="layer-info">
+                    <div class="layer-name">Application Layer</div>
+                    <div class="layer-function">Network services to applications</div>
+                </div>
+            </div>
+            <div id="layer7" class="layer-details">
+                <h3>Application Layer Details</h3>
+                <p><strong>Function:</strong> Provides network services directly to end-user applications</p>
+                <p><strong>Data Unit:</strong> Data</p>
+                <p><strong>Devices:</strong> Gateways, Web browsers, Email clients</p>
+                <div class="protocols">
+                    <span class="protocol">HTTP</span>
+                    <span class="protocol">HTTPS</span>
+                    <span class="protocol">FTP</span>
+                    <span class="protocol">SMTP</span>
+                    <span class="protocol">DNS</span>
+                    <span class="protocol">DHCP</span>
+                    <span class="protocol">POP3</span>
+                    <span class="protocol">IMAP</span>
+                </div>
+            </div>
+            
+            <div class="layer layer-6" onclick="toggleDetails('layer6')">
+                <div class="layer-number">6</div>
+                <div class="layer-info">
+                    <div class="layer-name">Presentation Layer</div>
+                    <div class="layer-function">Data translation, encryption, compression</div>
+                </div>
+            </div>
+            <div id="layer6" class="layer-details">
+                <h3>Presentation Layer Details</h3>
+                <p><strong>Function:</strong> Data formatting, encryption/decryption, compression</p>
+                <p><strong>Data Unit:</strong> Data</p>
+                <p><strong>Services:</strong> Character encoding, data compression, encryption</p>
+                <div class="protocols">
+                    <span class="protocol">SSL/TLS</span>
+                    <span class="protocol">JPEG</span>
+                    <span class="protocol">GIF</span>
+                    <span class="protocol">ASCII</span>
+                    <span class="protocol">EBCDIC</span>
+                    <span class="protocol">MPEG</span>
+                </div>
+            </div>
+            
+            <div class="layer layer-5" onclick="toggleDetails('layer5')">
+                <div class="layer-number">5</div>
+                <div class="layer-info">
+                    <div class="layer-name">Session Layer</div>
+                    <div class="layer-function">Session management and dialog control</div>
+                </div>
+            </div>
+            <div id="layer5" class="layer-details">
+                <h3>Session Layer Details</h3>
+                <p><strong>Function:</strong> Establishes, manages, and terminates sessions</p>
+                <p><strong>Data Unit:</strong> Data</p>
+                <p><strong>Services:</strong> Dialog control, session checkpointing, recovery</p>
+                <div class="protocols">
+                    <span class="protocol">NetBIOS</span>
+                    <span class="protocol">RPC</span>
+                    <span class="protocol">SQL Session</span>
+                    <span class="protocol">LDAP</span>
+                </div>
+            </div>
+            
+            <div class="layer layer-4" onclick="toggleDetails('layer4')">
+                <div class="layer-number">4</div>
+                <div class="layer-info">
+                    <div class="layer-name">Transport Layer</div>
+                    <div class="layer-function">End-to-end communication and reliability</div>
+                </div>
+            </div>
+            <div id="layer4" class="layer-details">
+                <h3>Transport Layer Details</h3>
+                <p><strong>Function:</strong> Reliable end-to-end communication, flow control, error recovery</p>
+                <p><strong>Data Unit:</strong> Segments (TCP) / Datagrams (UDP)</p>
+                <p><strong>Services:</strong> Port addressing, segmentation, multiplexing</p>
+                <div class="protocols">
+                    <span class="protocol">TCP</span>
+                    <span class="protocol">UDP</span>
+                    <span class="protocol">SPX</span>
+                </div>
+            </div>
+            
+            <div class="layer layer-3" onclick="toggleDetails('layer3')">
+                <div class="layer-number">3</div>
+                <div class="layer-info">
+                    <div class="layer-name">Network Layer</div>
+                    <div class="layer-function">Routing between different networks</div>
+                </div>
+            </div>
+            <div id="layer3" class="layer-details">
+                <h3>Network Layer Details</h3>
+                <p><strong>Function:</strong> Packet routing, logical addressing, path determination</p>
+                <p><strong>Data Unit:</strong> Packets</p>
+                <p><strong>Devices:</strong> Routers, Layer 3 switches</p>
+                <div class="protocols">
+                    <span class="protocol">IP</span>
+                    <span class="protocol">ICMP</span>
+                    <span class="protocol">OSPF</span>
+                    <span class="protocol">BGP</span>
+                    <span class="protocol">RIP</span>
+                </div>
+            </div>
+            
+            <div class="layer layer-2" onclick="toggleDetails('layer2')">
+                <div class="layer-number">2</div>
+                <div class="layer-info">
+                    <div class="layer-name">Data Link Layer</div>
+                    <div class="layer-function">Node-to-node delivery and error detection</div>
+                </div>
+            </div>
+            <div id="layer2" class="layer-details">
+                <h3>Data Link Layer Details</h3>
+                <p><strong>Function:</strong> Frame delivery, error detection, flow control</p>
+                <p><strong>Data Unit:</strong> Frames</p>
+                <p><strong>Devices:</strong> Switches, Bridges, NICs</p>
+                <div class="protocols">
+                    <span class="protocol">Ethernet</span>
+                    <span class="protocol">Token Ring</span>
+                    <span class="protocol">PPP</span>
+                    <span class="protocol">WiFi (802.11)</span>
+                    <span class="protocol">ARP</span>
+                </div>
+            </div>
+            
+            <div class="layer layer-1" onclick="toggleDetails('layer1')">
+                <div class="layer-number">1</div>
+                <div class="layer-info">
+                    <div class="layer-name">Physical Layer</div>
+                    <div class="layer-function">Transmission of raw bit streams</div>
+                </div>
+            </div>
+            <div id="layer1" class="layer-details">
+                <h3>Physical Layer Details</h3>
+                <p><strong>Function:</strong> Transmission of raw bits over physical medium</p>
+                <p><strong>Data Unit:</strong> Bits</p>
+                <p><strong>Devices:</strong> Hubs, Repeaters, Cables, Connectors</p>
+                <div class="protocols">
+                    <span class="protocol">10BASE-T</span>
+                    <span class="protocol">100BASE-TX</span>
+                    <span class="protocol">1000BASE-T</span>
+                    <span class="protocol">Fiber Optic</span>
+                </div>
+            </div>
+        </div>
+        
+        <h2>Data Flow Through OSI Layers</h2>
+        <div class="data-flow">
+            <div class="flow-box">Application Data</div>
+            <div class="arrow">↓</div>
+            <div class="flow-box">Data + Headers</div>
+            <div class="arrow">↓</div>
+            <div class="flow-box">Segments</div>
+            <div class="arrow">↓</div>
+            <div class="flow-box">Packets</div>
+            <div class="arrow">↓</div>
+            <div class="flow-box">Frames</div>
+            <div class="arrow">↓</div>
+            <div class="flow-box">Bits</div>
+        </div>
+        
+        <h2>Network Devices Comparison</h2>
+        <table class="comparison-table">
+            <thead>
+                <tr>
+                    <th>Device</th>
+                    <th>OSI Layer</th>
+                    <th>Function</th>
+                    <th>Collision Domains</th>
+                    <th>Broadcast Domains</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td><strong>Hub</strong></td>
+                    <td>Physical (1)</td>
+                    <td>Signal regeneration</td>
+                    <td>1 (shared)</td>
+                    <td>1 (shared)</td>
+                </tr>
+                <tr>
+                    <td><strong>Switch</strong></td>
+                    <td>Data Link (2)</td>
+                    <td>Frame forwarding</td>
+                    <td>1 per port</td>
+                    <td>1 (all ports)</td>
+                </tr>
+                <tr>
+                    <td><strong>Router</strong></td>
+                    <td>Network (3)</td>
+                    <td>Packet routing</td>
+                    <td>1 per port</td>
+                    <td>1 per interface</td>
+                </tr>
+                <tr>
+                    <td><strong>Gateway</strong></td>
+                    <td>All (1-7)</td>
+                    <td>Protocol conversion</td>
+                    <td>Varies</td>
+                    <td>Varies</td>
+                </tr>
+            </tbody>
+        </table>
+        
+        <h2>Protocol Stack Visualization</h2>
+        <div style="display: flex; justify-content: space-around; margin: 30px 0;">
+            <div style="text-align: center;">
+                <h3>Sending Process</h3>
+                <div style="border: 2px solid #007bff; border-radius: 8px; padding: 15px; background: #f8f9fa;">
+                    <div style="background: #dc3545; color: white; padding: 8px; margin: 2px; border-radius: 4px;">Application Data</div>
+                    <div style="background: #fd7e14; color: white; padding: 8px; margin: 2px; border-radius: 4px;">+ Presentation Header</div>
+                    <div style="background: #6610f2; color: white; padding: 8px; margin: 2px; border-radius: 4px;">+ Session Header</div>
+                    <div style="background: #198754; color: white; padding: 8px; margin: 2px; border-radius: 4px;">+ TCP/UDP Header</div>
+                    <div style="background: #fd7e14; color: white; padding: 8px; margin: 2px; border-radius: 4px;">+ IP Header</div>
+                    <div style="background: #6f42c1; color: white; padding: 8px; margin: 2px; border-radius: 4px;">+ Ethernet Header</div>
+                    <div style="background: #20c997; color: white; padding: 8px; margin: 2px; border-radius: 4px;">Bits on Wire</div>
+                </div>
+            </div>
+            
+            <div style="text-align: center;">
+                <h3>Receiving Process</h3>
+                <div style="border: 2px solid #28a745; border-radius: 8px; padding: 15px; background: #f8f9fa;">
+                    <div style="background: #20c997; color: white; padding: 8px; margin: 2px; border-radius: 4px;">Bits from Wire</div>
+                    <div style="background: #6f42c1; color: white; padding: 8px; margin: 2px; border-radius: 4px;">Remove Ethernet Header</div>
+                    <div style="background: #fd7e14; color: white; padding: 8px; margin: 2px; border-radius: 4px;">Remove IP Header</div>
+                    <div style="background: #198754; color: white; padding: 8px; margin: 2px; border-radius: 4px;">Remove TCP/UDP Header</div>
+                    <div style="background: #6610f2; color: white; padding: 8px; margin: 2px; border-radius: 4px;">Remove Session Header</div>
+                    <div style="background: #fd7e14; color: white; padding: 8px; margin: 2px; border-radius: 4px;">Remove Presentation Header</div>
+                    <div style="background: #dc3545; color: white; padding: 8px; margin: 2px; border-radius: 4px;">Application Data</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function toggleDetails(layerId) {
+            // Close all other details
+            const allDetails = document.querySelectorAll('.layer-details');
+            allDetails.forEach(detail => {
+                if (detail.id !== layerId) {
+                    detail.classList.remove('active');
+                }
+            });
+            
+            // Toggle the clicked layer
+            const targetDetail = document.getElementById(layerId);
+            targetDetail.classList.toggle('active');
+        }
+        
+        // Add click effects
+        document.querySelectorAll('.layer').forEach(layer => {
+            layer.addEventListener('click', function() {
+                // Add ripple effect
+                const ripple = document.createElement('div');
+                ripple.style.position = 'absolute';
+                ripple.style.borderRadius = '50%';
+                ripple.style.background = 'rgba(255,255,255,0.6)';
+                ripple.style.transform = 'scale(0)';
+                ripple.style.animation = 'ripple 0.6s linear';
+                ripple.style.left = '50%';
+                ripple.style.top = '50%';
+                ripple.style.width = '20px';
+                ripple.style.height = '20px';
+                ripple.style.marginLeft = '-10px';
+                ripple.style.marginTop = '-10px';
+                
+                this.style.position = 'relative';
+                this.appendChild(ripple);
+                
+                setTimeout(() => {
+                    ripple.remove();
+                }, 600);
+            });
+        });
+        
+        // Add CSS for ripple animation
+        const style = document.createElement('style');
+        style.textContent = `
+            @keyframes ripple {
+                to {
+                    transform: scale(4);
+                    opacity: 0;
+                }
+            }
+        `;
+        document.head.appendChild(style);
+    </script>
+</body>
+</html>
+                    
